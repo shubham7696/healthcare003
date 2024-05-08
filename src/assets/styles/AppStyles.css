@@ -1,0 +1,36 @@
+/* .blur-bg {
+   filter: blur(10px); Adjust the blur intensity as needed 
+} */
+.blur-bg {
+  background-color: rgba(255, 255, 255, 0.5); /* White color with 50% opacity */
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form_container {
+    width: 45%;
+}
+
+@media (min-width: 768px) {
+  .align-right-on-web {
+    position: absolute;
+    right: 0;
+  }
+
+  .form_container {
+    width: 45%;
+}
+}
+
+@media (max-width: 767px) {
+  .align-right-on-web {
+    margin: 0 auto;
+  }
+
+  .form_container {
+    width: 80%;
+}
+}
