@@ -42,7 +42,7 @@ function AddPatient() {
     console.log(payload);
 
     try {
-      fetchData("api/v1/employee/register", "post", payload);
+      fetchData("api/v1/patient/addNewPatient", "post", payload);
     } catch (error) {
       console.log(`Registered failure ${error}`);
     }
