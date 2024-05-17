@@ -1,0 +1,22 @@
+.side-menu {
+  background-color: #f8f9fa; /* Background color for the side menu */
+  height: 100%; /* Ensure the side menu takes up the full height of its parent container */
+  padding: 20px; /* Add padding to the side menu */
+}
+
+.content {
+  padding: 20px; /* Add padding to the main content area */
+}
+
+/* Styles for Navbar links */
+.nav-link {
+  color: #000000; /* Text color for the links */
+  padding: 10px 0; /* Add padding to the links */
+  font-size: 16px; /* Adjust font size */
+  text-decoration: none; /* Remove underline from links */
+}
+
+/* Styles for Navbar links on hover */
+.nav-link:hover {
+  color: #007bff; /* Change text color on hover */
+}

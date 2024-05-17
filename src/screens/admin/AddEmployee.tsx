@@ -1,13 +1,13 @@
 import React from "react";
 import "../../assets/styles/AppStyles.css";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Stack } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useApiReqHook from "../../res/hooks/ApiRequestHook";
 import AlertMsgComp from "../../res/components/AlertMsgComp";
-import Loader from "../../res/components/LoaderComp";
+import BlurBgLoader from "../../res/components/BlurBgLoaderComp";
 
-function Register() {
+function AddEmployee() {
   const navigate = useNavigate();
 
   const { loading, error, data, fetchData } = useApiReqHook(); // Use the custom hook
@@ -36,17 +36,18 @@ function Register() {
 
   // Handle success and error states
   if (data && data.success) {
-    console.log("register successfully qwerty");
-    navigate("/login");
+    console.log("added successfully qwerty");
+    navigate("/empList");
   }
   if (error) {
-    console.log("Login failure", error);
+    console.log("emp adding failure", error);
   }
 
   return (
-    <div className="40-w p-5 rounded blur-bg form_container">
+    <div className="position-relative p-4 blur-bg ">
+      {loading && <BlurBgLoader/>}
       <Form className="need-validation" onSubmit={submitForm}>
-        <h2>Register</h2>
+        <h2>Add Employee</h2>
         <Form.Group className="mb-3">
           <Form.Label>Full Name</Form.Label>
           <Form.Control type="text" name="fullName" placeholder="Name" required />
@@ -79,20 +80,13 @@ function Register() {
             onDismiss={() => console.log("Dismissed")}
           />
         )}
+        <Button className="btn btn-primary w-100 mb-4" variant="primary" type="submit">
+          Add Employee
+        </Button>
         {/* Show loader if loading */}
-        {loading ? (
-          <Loader />
-        ) : (
-          <Button className="btn btn-primary w-100 mb-4" variant="primary" type="submit">
-            Register
-          </Button>
-        )}
-        <p className="text-right">
-          Already have account ? <Link to={"/login"}>Login</Link>
-        </p>
       </Form>
     </div>
   );
 }
 
-export default Register;
+export default AddEmployee;

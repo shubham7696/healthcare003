@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../assets/styles/AppStyles.css";
-import { Button, Form } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Button, Form, Stack } from "react-bootstrap";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useApiReqHook from "../../res/hooks/ApiRequestHook";
 import AlertMsgComp from "../../res/components/AlertMsgComp";
-import Loader from "../../res/components/LoaderComp";
+import BlurBgLoader from "../../res/components/BlurBgLoaderComp";
 
-function Register() {
+function UpdateEmployee() {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const { loading, error, data, fetchData } = useApiReqHook(); // Use the custom hook
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  
+  useEffect(() => {
+    if (location.state) {
+      const { fullName, email } = location.state; // Assuming you're passing fullName and email in location.state
+      setFormData({ ...formData, fullName, email });
+    }
+  }, []);
 
   // Handle form submission logic here
   const submitForm = async (values: {
@@ -19,41 +37,53 @@ function Register() {
   }) => {
     values.preventDefault();
 
-    const formData = new FormData(values.target);
     const payload = {
-      fullName: formData.get("fullName"),
-      email: formData.get("email"),
-      password: formData.get("password"),
+      ...formData,
+      employeeId: location.state._id,
     };
-    console.log(payload);
 
     try {
-      fetchData("api/v1/employee/register", "post", payload);
+      fetchData("api/v1/employee/updateEmp", "post", payload);
     } catch (error) {
-      console.log(`Registered failure ${error}`);
+      console.log(`Update failure ${error}`);
     }
   };
 
   // Handle success and error states
   if (data && data.success) {
-    console.log("register successfully qwerty");
-    navigate("/login");
+    console.log("update successfully qwerty");
+    navigate("/empList");
   }
   if (error) {
-    console.log("Login failure", error);
+    console.log("emp update failure", error);
   }
 
   return (
-    <div className="40-w p-5 rounded blur-bg form_container">
+    <div className="position-relative p-4 blur-bg ">
+      {loading && <BlurBgLoader />}
       <Form className="need-validation" onSubmit={submitForm}>
-        <h2>Register</h2>
+        <h2>Update Employee</h2>
         <Form.Group className="mb-3">
           <Form.Label>Full Name</Form.Label>
-          <Form.Control type="text" name="fullName" placeholder="Name" required />
+          <Form.Control
+            type="text"
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleInputChange}
+            placeholder="Name"
+            required
+          />
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" name="email" placeholder="Enter Email" required />
+          <Form.Control
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Enter Email"
+            required
+          />
         </Form.Group>
         <Form.Group className="mb-4">
           <Form.Label>Password</Form.Label>
@@ -79,20 +109,13 @@ function Register() {
             onDismiss={() => console.log("Dismissed")}
           />
         )}
+        <Button className="btn btn-primary w-100 mb-4" variant="primary" type="submit">
+          Update Employee
+        </Button>
         {/* Show loader if loading */}
-        {loading ? (
-          <Loader />
-        ) : (
-          <Button className="btn btn-primary w-100 mb-4" variant="primary" type="submit">
-            Register
-          </Button>
-        )}
-        <p className="text-right">
-          Already have account ? <Link to={"/login"}>Login</Link>
-        </p>
       </Form>
     </div>
   );
 }
 
-export default Register;
+export default UpdateEmployee;
