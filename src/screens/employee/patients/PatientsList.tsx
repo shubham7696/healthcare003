@@ -9,15 +9,15 @@ import ConfirmationDialog from "../../../res/components/confirmationDialog/Confi
 
 const PatientList = () => {
   const navigate = useNavigate();
-  const { loading, error: empdataError, data: empData, fetchData: fetchEmpData } = useApiReqHook();
+  const { loading, error: patientdataError, data: patientData, fetchData: fetchPatientData } = useApiReqHook();
   const {
-    loading: empDeleteLoading,
-    error: empdeleteError,
-    data: deletedEmpData,
+    loading: patientDeleteLoading,
+    error: patientdeleteError,
+    data: deletedPatientData,
     fetchData: fetchDeletedEmpData,
   } = useApiReqHook();
 
-  const [employees, setEmployees] = useState([]);
+  const [patients, setPatients] = useState([]);
 
   const {
     showConfirmationDialog,
@@ -28,62 +28,62 @@ const PatientList = () => {
   } = useConfirmationDialog();
 
   useEffect(() => {
-    fetchEmployees();
+    fetchPatients();
   }, []);
 
   const handleRefresh = () => {
     // Refresh user details if needed
-    fetchEmployees();
+    fetchPatients();
   };
 
   useEffect(() => {
-    if (empData && empData.success) {
-      console.log("Employee list =====", empData);
-      setEmployees(empData.data); // employee list
+    if (patientData && patientData.success) {
+      console.log("Patients list =====", patientData);
+      setPatients(patientData.data); // patient list
     }
 
-    if (empdataError) {
-      console.log("Fetch employee failure =====", empdataError);
-      console.log(`${empdataError.message}`);
+    if (patientdataError) {
+      console.log("Fetch Patients failure =====", patientdataError);
+      console.log(`${patientdataError.message}`);
     }
-  }, [empData, empdataError]);
+  }, [patientData, patientdataError]);
 
   useEffect(() => {
-    if (deletedEmpData && deletedEmpData.success) {
-      console.log("Employee deleted =====", deletedEmpData);
-      fetchEmployees();
+    if (deletedPatientData && deletedPatientData.success) {
+      console.log("Patient deleted =====", deletedPatientData);
+      fetchPatients();
     }
 
-    if (empdeleteError) {
-      console.log("delete employee failure =====", empdeleteError);
-      console.log(`${empdeleteError.message}`);
+    if (patientdeleteError) {
+      console.log("delete patient failure =====", patientdeleteError);
+      console.log(`${patientdeleteError.message}`);
     }
-  }, [deletedEmpData, empdeleteError]);
+  }, [deletedPatientData, patientdeleteError]);
 
-  const fetchEmployees = () => {
+  const fetchPatients = () => {
     try {
-      fetchEmpData("api/v1/employee/getAllEmployee", "get");
+      fetchPatientData("api/v1/patients/getAllPatients", "get");
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleDelete = (id) => {
-    showConfirmationDialog("Are you sure you want to delete this item?", deleteEmp(id));
+    showConfirmationDialog("Are you sure you want to delete this item?", deletePatient(id));
   };
 
-  const deleteEmp = (id) => {
+  const deletePatient = (id) => {
     console.log(id);
     const payload = {
-      empId: id,
+      patientId: id,
       employeeType: localStorage.getItem("userType"),
     };
-    fetchDeletedEmpData(`api/v1/employee/deleteEmp/${id}`, "delete", payload);
+    fetchDeletedEmpData(`api/v1/patients/deletePatient/${id}`, "delete", payload);
   };
 
-  const editEmp = (employee) => {
-    console.log(employee);
-    navigate("/updateEmp", { state: employee });
+  const editPatient = (patient) => {
+    console.log(patient);
+    navigate("/updatePatient", { state: patient });
   };
 
   return (
@@ -91,7 +91,7 @@ const PatientList = () => {
       <div className="list-header">
         <Row className="align-items-center justify-content-between">
           <Col className="text-center">
-            <h2 className="pt-2">Employee List</h2> {/* Centered heading */}
+            <h2 className="pt-2">Patient List</h2> {/* Centered heading */}
           </Col>
           <Col xs="auto">
             <Button onClick={() => handleRefresh} className="refresh-button">
@@ -110,17 +110,17 @@ const PatientList = () => {
           </tr>
         </thead>
         <tbody className="thead-light">
-          {employees.map((employee, index) => (
-            <tr key={employee._id}>
+          {patients.map((patient, index) => (
+            <tr key={patient._id}>
               <td>{index + 1}</td>
-              <td>{employee.fullName}</td>
-              <td>{employee.email}</td>
+              <td>{patient.fullName}</td>
+              <td>{patient.email}</td>
               <td>
-                <Button onClick={() => editEmp(employee)} variant="outline-secondary">
+                <Button onClick={() => editPatient(patient)} variant="outline-secondary">
                   <FontAwesomeIcon icon={faEdit} /> {/* Refresh Icon */}
                 </Button>
                 {"  "}
-                <Button onClick={() => handleDelete(employee._id)} variant="outline-danger">
+                <Button onClick={() => handleDelete(patient._id)} variant="outline-danger">
                   <FontAwesomeIcon icon={faTrash} /> {/* Refresh Icon */}
                 </Button>
               </td>
