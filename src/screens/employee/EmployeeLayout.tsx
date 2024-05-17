@@ -4,7 +4,7 @@ import { Col, Row } from "react-bootstrap";
 import AppSideMenu from "../../res/components/AppSideMenu";
 import UserDetails from "../../res/components/UserDetailComp";
 
-const AdminLayout = () => {
+const EmployeeLayout = () => {
   return (
     <Row>
       {/* Side menu on the left */}
@@ -20,4 +20,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default EmployeeLayout;

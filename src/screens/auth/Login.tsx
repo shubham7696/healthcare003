@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import "../../assets/styles/AppStyles.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -36,17 +36,29 @@ function Login() {
     }
   };
 
-  // Handle success and error states
-  if (data && data.success) {
-    console.log("Login successfully qwerty",data);
-    // save token in local storage.
-    localStorage.setItem("token", data.token)
-    // navigate to home page depending on  user type
-    navigate("/AdminPage");
-  }
-  if (error) {
-    console.log("Login failure", error);
-  }
+  useEffect(() => {
+    // Handle success and error states
+    if (data && data.success) {
+      console.log("Login successfully qwerty", data);
+      // save token in local storage.
+      localStorage.setItem("token", data.token);
+
+      // Extract userType from data
+      const userType = data.data.employeeType || "data_operator"; // Default to "employee" if userType is null
+
+      // Save userType in local storage
+      localStorage.setItem("userType", userType);
+      // Save user details in localStorage
+      localStorage.setItem("userDetails", JSON.stringify(data.data));
+
+      // Navigate to home page depending on user type
+      navigate(userType === "admin" ? "/empList" : "/patientList");
+      
+    }
+    if (error) {
+      console.log("Login failure", error);
+    }
+  },[data, error])
 
   return (
     <div className="40-w p-5 rounded blur-bg form_container">

@@ -6,15 +6,15 @@ const useApiReqHook = () => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
 
-  const fetchData = async (url, method, payload = {}, headers = {}) => {
+  const fetchData = async (url, method, payload = {}) => {
     setLoading(true);
     setError(null);
-    try {
-      const token = localStorage.getItem("token");
-      if (token) {
-        headers = {Authorization : `Bearer ${token}`};
+    try{
+      let responseConfig = { };
+      if (method === "get" || method === "delete") {
+        responseConfig.params = payload;
       }
-      const res = await axios[method](url, payload, {headers});
+      const res = await axios[method](url, payload, responseConfig);
       if (!res.data.success) {
         setError({message: res.data.message});
       } else {
