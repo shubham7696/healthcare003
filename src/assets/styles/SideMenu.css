@@ -1,0 +1,26 @@
+.side-menu {
+  background-color: #f8f9fa; /* Background color for the side menu */
+   /* Ensure the side menu takes up the full height of its parent container */
+  padding: 20px; /* Add padding to the side menu */
+  border-left: 2px solid #007bff; 
+}
+
+.content {
+  padding: 20px; /* Add padding to the main content area */
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px; /* Adjust padding */
+  color: #343a40;
+}
+
+.nav-link.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.nav-link .mr-2 {
+  margin-right: 8px;
+}

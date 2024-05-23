@@ -1,0 +1,57 @@
+/* .blur-bg {
+   filter: blur(10px); Adjust the blur intensity as needed 
+} */
+.blur-bg {
+  background-color: rgba(255, 255, 255, 0.5); /* White color with 50% opacity */
+}
+
+.blur-bg-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 9999; /* Ensure the loader appears above other elements */
+  align-content: center;
+  justify-content: center;
+}
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form_container {
+    width: 45%;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+
+
+@media (min-width: 768px) {
+  .align-right-on-web {
+    position: absolute;
+    right: 0;
+  }
+
+  .form_container {
+    width: 45%;
+}
+}
+
+@media (max-width: 767px) {
+  .align-right-on-web {
+    margin: 0 auto;
+  }
+
+  .form_container {
+    width: 80%;
+}
+}
