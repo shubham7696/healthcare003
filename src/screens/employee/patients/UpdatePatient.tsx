@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../../assets/styles/AppStyles.css";
 import { Button, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useApiReqHook from "../../../res/hooks/ApiRequestHook";
 import AlertMsgComp from "../../../res/components/AlertMsgComp";
 import BlurBgLoader from "../../../res/components/BlurBgLoaderComp";
 
 function UpdatePatient() {
   const navigate = useNavigate();
-
+  const location = useLocation();
+  let patientId = ""
   const { loading, error, data, fetchData } = useApiReqHook(); // Use the custom hook
 
   const [formData, setFormData] = useState({
@@ -31,6 +32,17 @@ function UpdatePatient() {
       [name]: value,
     });
   };
+
+
+  useEffect(() => {
+    const patientData = location.state;
+    patientId = location.state._id;
+    console.log("##########   ",patientId,"  ##########");
+    if (patientData) {
+      setFormData(patientData); // Directly set patient data in form state
+    }
+  }, [location]);
+
   // Handle form submission logic here
   const submitForm = async (values: {
     target: HTMLFormElement | undefined;
@@ -38,30 +50,30 @@ function UpdatePatient() {
   }) => {
     values.preventDefault();
 
-    const payload = { ...formData };
+    const payload = { ...formData, patientId };
     console.log(payload);
 
     try {
-      fetchData("api/v1/employee/register", "post", payload);
+      fetchData("api/v1/patients/updatePatient", "put", payload);
     } catch (error) {
-      console.log(`Registered failure ${error}`);
+      console.log(`Update failure ${error}`);
     }
   };
 
   // Handle success and error states
   if (data && data.success) {
-    console.log("added successfully qwerty");
-    navigate("/empList");
+    console.log("updated successfully qwerty");
+    navigate("/patientList");
   }
   if (error) {
-    console.log("emp adding failure", error);
+    console.log("patient update failure", error);
   }
 
   return (
     <div className="position-relative p-4 blur-bg ">
       {loading && <BlurBgLoader />}
       <Form className="need-validation" onSubmit={submitForm}>
-        <h2>Add Patient</h2>
+        <h2>Update Patient</h2>
         <Form.Group className="mb-3">
           <Form.Label>Full Name</Form.Label>
           <Form.Control
@@ -93,6 +105,7 @@ function UpdatePatient() {
             name="gender"
             value="male"
             onChange={handleInputChange}
+            checked={formData.gender === "male"}
           />
           <Form.Check
             inline
@@ -101,6 +114,7 @@ function UpdatePatient() {
             name="gender"
             value="female"
             onChange={handleInputChange}
+            checked={formData.gender === "female"}
           />
           <Form.Check
             inline
@@ -109,6 +123,7 @@ function UpdatePatient() {
             name="gender"
             value="other"
             onChange={handleInputChange}
+            checked={formData.gender === "other"}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -199,7 +214,7 @@ function UpdatePatient() {
           />
         )}
         <Button className="btn btn-primary w-100 mb-4" variant="primary" type="submit">
-          Add Patient
+          Update Patient
         </Button>
         {/* Show loader if loading */}
       </Form>

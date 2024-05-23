@@ -25,6 +25,16 @@ h2 {
     width: 45%;
 }
 
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+
+
 @media (min-width: 768px) {
   .align-right-on-web {
     position: absolute;

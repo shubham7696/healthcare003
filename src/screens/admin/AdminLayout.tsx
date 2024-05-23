@@ -8,7 +8,7 @@ const AdminLayout = () => {
   return (
     <Row>
       {/* Side menu on the left */}
-      <Col md={2}>
+      <Col md={3}>
         <AppSideMenu />
       </Col>
       {/* Main content on the right */}

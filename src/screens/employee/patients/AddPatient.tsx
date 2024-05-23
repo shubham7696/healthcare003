@@ -42,7 +42,7 @@ function AddPatient() {
     console.log(payload);
 
     try {
-      fetchData("api/v1/patient/addNewPatient", "post", payload);
+      fetchData("api/v1/patients/addNewPatient", "post", payload);
     } catch (error) {
       console.log(`Registered failure ${error}`);
     }
@@ -51,7 +51,7 @@ function AddPatient() {
   // Handle success and error states
   if (data && data.success) {
     console.log("added successfully qwerty");
-    navigate("/empList");
+    navigate("/patientList");
   }
   if (error) {
     console.log("emp adding failure", error);
@@ -61,7 +61,7 @@ function AddPatient() {
     <div className="position-relative p-4 blur-bg ">
       {loading && <BlurBgLoader />}
       <Form className="need-validation" onSubmit={submitForm}>
-        <h2>Add Patient</h2>
+        <h2>Update Patient</h2>
         <Form.Group className="mb-3">
           <Form.Label>Full Name</Form.Label>
           <Form.Control
@@ -185,7 +185,7 @@ function AddPatient() {
             error={true}
             message={error.message}
             duration={3000}
-            onDismiss={() => console.log("Dismissed")}
+            onDismiss={() => {console.log("Dismissed")}}
           />
         )}
         {/* Show success message if data exists and success */}

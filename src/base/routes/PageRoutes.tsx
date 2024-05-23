@@ -11,6 +11,8 @@ import PatientList from "../../screens/employee/patients/PatientsList";
 import AddPatient from "../../screens/employee/patients/AddPatient";
 import EmployeeLayout from "../../screens/employee/EmployeeLayout";
 import UpdatePatient from "../../screens/employee/patients/UpdatePatient";
+import AddAppointment from "../../screens/employee/appointments/AddAppointment";
+import AppointmentList from "../../screens/employee/appointments/AppointmentList";
 
 
 // Router singleton created
@@ -28,11 +30,11 @@ function Root() {
         <Route path="/empList" element={<EmployeeList />} />
         <Route path="/addEmp" element={<AddEmployee />} />
         <Route path="/updateEmp" element={<UpdateEmployee />} />
-      </Route>
-      <Route element={<EmployeeLayout />}>
         <Route path="/patientList" element={<PatientList />} />
         <Route path="/addPatient" element={<AddPatient />} />
         <Route path="/updatePatient" element={<UpdatePatient />} />
+        <Route path="/addAppointment" element={<AddAppointment />} />
+        <Route path="/allAppointment" element={<AppointmentList />} />
       </Route>
     </Routes>
   );
