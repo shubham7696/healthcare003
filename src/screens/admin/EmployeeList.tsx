@@ -64,7 +64,7 @@ const EmployeeList = () => {
   };
 
   const handleDelete = (id) => {
-    showConfirmationDialog("Are you sure you want to delete this item?", deleteEmp(id));
+    showConfirmationDialog("Are you sure you want to delete this item?", () => deleteEmp(id));
   };
 
   const deleteEmp = (id) => {
@@ -97,6 +97,7 @@ const EmployeeList = () => {
           </Col>
         </Row>
       </div>
+      
       <table className="table table-striped">
         <thead className="thead-dark">
           <tr>
