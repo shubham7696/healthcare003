@@ -153,8 +153,8 @@ function AppointmentList() {
               </Form.Group> */}
             </>
           )}
-        {/* </Modal.Body>
-        <Modal.Footer>
+        </Modal.Body>
+        {/* <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Close
           </Button>
